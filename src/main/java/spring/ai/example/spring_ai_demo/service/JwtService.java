@@ -8,6 +8,7 @@ import java.util.function.Function;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,8 @@ import spring.ai.example.spring_ai_demo.entity.User;
 
 @Service
 public class JwtService {
-
-	private String secretKey=null;
+	@Value("${app.security.secret-key}")
+	private String secretKey;
 
 	public String generateToken(User user) {
 		Map<String,Object> claims = new HashMap<>();
@@ -29,7 +30,7 @@ public class JwtService {
 		.claims()
 		.add(claims)
 		.subject(user.getUserName())
-		.issuer("ALAS")
+		.issuer("")
 		.issuedAt(new Date(System.currentTimeMillis()))
 		.expiration(new Date(System.currentTimeMillis()+60*10*1000))
 		.and()
@@ -43,7 +44,7 @@ public class JwtService {
 		return Keys.hmacShaKeyFor(decode);
 	}
 	public String getSecretKey(){
-		return this.secretKey="c91238ba95f110ab3aa914b8ab89e26bafb5f7bfa5eb1a642515aeda248d5659";
+		return this.secretKey;
 	}
 	public String extractUserName(String token) {
 		// TODO Auto-generated method stub
