@@ -30,7 +30,7 @@ public class JwtService {
 		.claims()
 		.add(claims)
 		.subject(user.getUserName())
-		.issuer("")
+		.issuer("ALAS")
 		.issuedAt(new Date(System.currentTimeMillis()))
 		.expiration(new Date(System.currentTimeMillis()+60*10*1000))
 		.and()
